@@ -1,0 +1,105 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1906                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      Nb;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
+    }
+    inlet
+    {
+        type            zeroGradient;
+    }
+    ground
+    {
+        type            zeroGradient;
+    }
+    star
+    {
+        type            zeroGradient;
+    }
+    port
+    {
+        type            zeroGradient;
+    }
+    top
+    {
+        type            zeroGradient;
+    }
+
+    interior
+    {
+        type            zeroGradient;
+    }
+    exterior
+    {
+        type            zeroGradient;
+    }
+    seats
+    {
+        type            zeroGradient;
+    }
+    exhaust
+    {
+        type            zeroGradient;
+    }
+    rails
+    {
+        type            zeroGradient;
+    }
+    vents
+    {
+        type            zeroGradient;
+    }
+    driver
+    {
+        type            zeroGradient;
+    }
+    standingFwd
+    {
+        type            zeroGradient;
+    }
+    standingRear
+    {
+        type            zeroGradient;
+    }
+    mouthDriver
+    {
+        type            zeroGradient;
+    }
+    mouthStandingRear
+    {
+        type            zeroGradient;
+    }
+    mouthStandingFwd
+    {
+        type            zeroGradient;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //

@@ -1,0 +1,132 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      alphat;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 2 -1 0 0 0 0 ];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    outlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    inlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    ground
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    star
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    port
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    top
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+
+    interior
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    exterior
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    seats
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    exhaust
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    rails
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    vents
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    driver
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    standingFwd
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    standingRear
+    {
+        type            alphatJayatillekeWallFunction;
+        Prt             0.9;
+        value           uniform 0;
+    }
+    mouthDriver
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    mouthStandingRear
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    mouthStandingFwd
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //

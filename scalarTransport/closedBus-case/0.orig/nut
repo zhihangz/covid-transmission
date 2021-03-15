@@ -1,0 +1,86 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      nut;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 2 -1 0 0 0 0 ];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    cabin
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    seats
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    exhaust
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    rails
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    supplyVents
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    driver
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    standingFwd
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    standingRear
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    mouthDriver
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    mouthStandingRear
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    mouthStandingFwd
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //

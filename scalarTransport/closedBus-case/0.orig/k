@@ -1,0 +1,96 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      k;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 2 -2 0 0 0 0 ];
+
+internalField   uniform 0.04;
+
+boundaryField
+{
+    cabin
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    seats
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    exhaust
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+    }
+    rails
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    supplyVents
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.025;       // 2.5% turbulent intensity
+        value           $internalField;
+        // type            fixedValue;
+        // value           $internalField;
+    }
+    driver
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    standingFwd
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    standingRear
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+    mouthDriver
+    {
+        // type            inletOutlet;
+        // inletValue      $internalField;
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.1;       // 10% turbulent intensity
+        value           $internalField;
+    }
+    mouthStandingRear
+    {
+        // type            inletOutlet;
+        // inletValue      $internalField;
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.1;       // 10% turbulent intensity
+        value           $internalField;
+    }
+    mouthStandingFwd
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.1;       // 10% turbulent intensity
+        value           $internalField;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //

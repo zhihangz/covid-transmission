@@ -1,0 +1,78 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1906                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      C;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    cabin
+    {
+        type            zeroGradient;
+    }
+    seats
+    {
+        type            zeroGradient;
+    }
+    exhaust
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
+    }
+    rails
+    {
+        type            zeroGradient;
+    }
+    supplyVents
+    {
+        type            fixedValue;
+        value           uniform 62.8;//80% flowRate of mouth;
+    }
+    driver
+    {
+        type            zeroGradient;
+    }
+    standingFwd
+    {
+        type            zeroGradient;
+    }
+    standingRear
+    {
+        type            zeroGradient;
+    }
+    mouthDriver
+    {
+        type            zeroGradient;
+    }
+    mouthStandingRear
+    {
+        type            zeroGradient;
+    }
+    mouthStandingFwd
+    {
+        type            fixedValue;
+        value           uniform 1e+06;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //

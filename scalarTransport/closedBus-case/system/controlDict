@@ -1,0 +1,214 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+libs
+(
+    "libOpenFOAM.so"
+    "libincompressibleTurbulenceModels.so"
+);
+
+application     BBPScalarFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         600;
+
+deltaT          0.0001;
+
+writeControl    adjustableRunTime;
+
+writeInterval   20;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           25;
+
+functions
+{
+     probes
+     {
+         // Where to load it from
+         libs            ( "libsampling.so" );
+
+         type            probes;
+
+         // Name of the directory for probe data
+         name            probes;
+
+         // Write at same frequency as fields
+         writeControl   timeStep;    
+         writeInterval  1;
+
+         // Fields to be probed
+         fields
+         (
+             k U C T
+         );
+
+         probeLocations
+         (
+             ( -4.0  0 -0.8 )        // at 
+             ( -2.0  0 -0.8 ) 
+             (  0.5  0 -0.8 ) 
+             (  2.0  0 -0.8 )
+	     (  5.0  0 -0.8 ) 
+         );
+     }
+    cout-fwd
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            mouthStandingFwd;
+
+        operation       weightedSum;
+        weightField     C;
+        fields          (phi);
+    }
+    cout-exhaust
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            exhaust;
+
+        operation       weightedSum;
+        weightField     C;
+        fields          (phi);
+    }
+    phiout-exhaust
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            exhaust;
+
+        operation       sum;
+        fields          (phi);
+    }
+    cout-vents
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            supplyVents;
+
+        operation       weightedSum;
+        weightField     C;
+        fields          (phi);
+    }
+    cin-driver
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            mouthDriver;
+
+        operation       weightedSum;
+        weightField     C;
+        fields          (phi);
+    }
+    cin-rear
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             false;
+        writeControl    timeStep;
+        writeFields     true;
+
+        surfaceFormat   none;
+        regionType      patch;
+        name            mouthStandingRear;
+
+        operation       weightedSum;
+        weightField     C;
+        fields          (phi);
+    }
+    CMean
+    {
+        type                    fieldAverage;
+        functionObjectLibs ( "libfieldFunctionObjects.so" );
+        enabled               true;
+        writeControl    adjustableRunTime;
+        writeInterval   20;
+        timeStart             0;
+        timeEnd               600;
+        resetOnOutput     false;
+
+        fields
+        (
+            C
+            {
+                mean           on;
+                prime2Mean  off;
+                base           time;
+            }
+        );
+    }
+
+}
+
+// ************************************************************************* //

@@ -1,0 +1,84 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    cabin
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    seats
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    exhaust
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 0);
+    }
+    rails
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    supplyVents
+    {
+        type            fixedValue;
+        value           uniform (0 0 -5.4);
+    }
+    driver
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    standingFwd
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    standingRear
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    mouthDriver
+    {
+        type            fixedValue;
+        value           uniform (-0.1 0 0);//inhale
+    }
+    mouthStandingRear
+    {
+        type            fixedValue;
+        value           uniform (-0.1 0 0);//inhale
+    }
+    mouthStandingFwd
+    {
+        type            fixedValue;
+        value           uniform (0.1 0 0);//exhale
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+// ************************************************************************* //

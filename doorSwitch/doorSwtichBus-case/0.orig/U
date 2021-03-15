@@ -1,0 +1,119 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    outlet
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 0);
+    }
+    inlet
+    {
+        type            fixedValue;
+        value           uniform (-2.235 0 0);//5mph
+    }
+    ground
+    {
+        type            fixedValue;
+        value           uniform (-2.235 0 0);
+    }
+    star
+    {
+        type            slip;
+    }
+    port
+    {
+        type            slip;
+    }
+    top
+    {
+        type            slip;
+    }
+
+    interior
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    exterior
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    seats
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    exhaust
+    {
+        // type            pressureInletOutletVelocity;
+        // value           uniform (0 0 0);
+        type            fixedValue;
+        value           uniform (-1.75 0 0);//vents flowRate
+    }
+    rails
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    vents
+    {
+        type            fixedValue;
+        value           uniform (0 0 -5.4);
+    }
+    driver
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    standingFwd
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    standingRear
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    mouthDriver
+    {
+        type            fixedValue;
+        value           uniform (-0.1 0 0);//inhale
+    }
+    mouthStandingRear
+    {
+        type            fixedValue;
+        value           uniform (-0.1 0 0);//inhale
+    }
+    mouthStandingFwd
+    {
+        type            fixedValue;
+        value           uniform (0.1 0 0);//exhale
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+// ************************************************************************* //

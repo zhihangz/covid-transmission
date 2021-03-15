@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 2 -3 0 0 0 0 ];
+
+internalField   uniform 0.26;
+
+boundaryField
+{
+    cabin
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    seats
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    exhaust
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+    }
+    rails
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    supplyVents
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.005;
+        value           $internalField;
+    }
+    driver
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    standingFwd
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    standingRear
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    mouthDriver
+    {
+        // type            inletOutlet;
+        // inletValue      $internalField;
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.0075;
+        value           $internalField;
+    }
+    mouthStandingRear
+    {
+        // type            inletOutlet;
+        // inletValue      $internalField;
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.0075;
+        value           $internalField;
+    }
+    mouthStandingFwd
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.0075;
+        value           $internalField;
+    }
+    "proc.*"
+    {
+        type            processor;
+    }
+}
+
+
+// ************************************************************************* //
