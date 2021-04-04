@@ -89,7 +89,12 @@ int main(int argc, char *argv[])
     #include "OFstream.H"
     fileName fname = ("total-C");
     OFstream os(fname);
-    os << "Time" << tab << "total-C" << endl;
+    os << "Time" << tab << "total-C" << tab << "std-C" << endl;
+
+    const scalarField& vol = mesh.V();
+    scalar ttvol = gSum(vol);
+    Info << "total volume = " << ttvol << endl;
+    const dimensionedScalar one{"one",C.dimensions(),1.0};
 
     // switch of body force, 0 is open, 1 is closed, see UEqn
     scalar swtch = 0.0;
@@ -166,7 +171,10 @@ int main(int argc, char *argv[])
 
         scalar tC = fvc::domainIntegrate(C).value();
         Info << "total C = " << tC << endl;
-        os << runTime.timeName() << tab << tC << endl;
+        scalarField dC(C/one-tC/ttvol);
+        scalar std = Foam::sqrt(gSum(vol*dC*dC)/ttvol);
+        Info << "std of C = " << std << endl;
+        os << runTime.timeName() << tab << tC << tab << std << endl;
     }
 
     Info<< "End\n" << endl;
