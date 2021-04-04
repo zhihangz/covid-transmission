@@ -34,9 +34,11 @@ boundaryField
     }
     exhaust
     {
-        type            prghTotalPressure;
-        rho             rhok;
-        p0              uniform 0;
+        // type            prghTotalPressure;
+        // rho             rhok;
+        // p0              uniform 0;
+        type            fixedValue;
+        value           uniform 0;
     }
     rails
     {
