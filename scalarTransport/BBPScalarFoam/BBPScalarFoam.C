@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     #include "OFstream.H"
     fileName fname = ("total-C");
     OFstream os(fname);
-    os << "Time" << tab << "total-C" << tab << "std" << tab << "rms" << endl;
+    os << "Time" << tab << "total-C" << tab << "rms" << endl;
 
     const scalarField& vol = mesh.V();
     scalar ttvol = gSum(vol);
@@ -132,11 +132,9 @@ int main(int argc, char *argv[])
         runTime.printExecutionTime(Info);
 
         scalar tC = fvc::domainIntegrate(C).value();
-        scalarField dC(C/one-tC/ttvol); //deviation of C
-        scalar std = Foam::sqrt(gSum(vol*dC*dC)/ttvol);
         scalarField vC(C/one); //value of C
         scalar rms = Foam::sqrt(gSum(vol*vC*vC)/ttvol);
-        os << runTime.timeName() << tab << tC << tab << std << tab << rms << endl;
+        os << runTime.timeName() << tab << tC << tab << rms << endl;
     }
 
     Info<< "End\n" << endl;
